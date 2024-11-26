@@ -1,9 +1,11 @@
 import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.Map;
 
 public class ConversorDeMonedas {
 
-    public static void conversion(String monedaBase, String monedaDestino, double monto) {
+    public static void conversion(String monedaBase, String monedaDestino, double monto) throws IOException {
         String json = ConsultaMoneda.consultarTasaDeCambio(monedaBase);
 
         if (json.startsWith("Error:")) {

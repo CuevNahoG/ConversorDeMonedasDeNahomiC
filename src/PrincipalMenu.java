@@ -1,26 +1,30 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class PrincipalMenu {
 
-    public static void main(String[] args) {
+    public PrincipalMenu() throws IOException {
+    }
+
+    public static void main(String[] args) throws IOException {
         Scanner lectura = new Scanner(System.in);
         int opcion = 0;
 
-        while (opcion != 7) {
+        while (opcion != 11) {
             mostrarMenu();
 
-            // Validar entrada
+            // Validar datos ingresados
             if (lectura.hasNextInt()) {
                 opcion = lectura.nextInt();
                 lectura.nextLine(); // Salto de línea
             } else {
                 System.out.println("Por favor, ingresa un número válido.");
-                lectura.nextLine(); // Entrada no válida
+                lectura.nextLine(); // Si el dato no es válido
                 continue;
             }
 
             // Procesar la opción seleccionada
-            if (opcion >= 1 && opcion <= 6) {
+            if (opcion >= 1 && opcion <= 10) {
                 System.out.print("Ingresa el monto a convertir: ");
                 double monto = 0;
 
@@ -35,7 +39,7 @@ public class PrincipalMenu {
                 }
 
                 realizarConversion(opcion, monto);
-            } else if (opcion == 7) {
+            } else if (opcion == 11) {
                 System.out.println("Saliendo del conversor de monedas...");
             } else {
                 System.out.println("Opción no válida, por favor intenta nuevamente.");
@@ -45,7 +49,7 @@ public class PrincipalMenu {
         lectura.close();
     }
 
-    private static void realizarConversion(int opcion, double monto) {
+    private static void realizarConversion(int opcion, double monto) throws IOException {
         switch (opcion) {
             case 1 -> ConversorDeMonedas.conversion("USD", "ARS", monto);
             case 2 -> ConversorDeMonedas.conversion("ARS", "USD", monto);
@@ -53,13 +57,17 @@ public class PrincipalMenu {
             case 4 -> ConversorDeMonedas.conversion("BRL", "USD", monto);
             case 5 -> ConversorDeMonedas.conversion("USD", "CLP", monto);
             case 6 -> ConversorDeMonedas.conversion("CLP", "USD", monto);
+            case 7 -> ConversorDeMonedas.conversion("USD", "COP", monto);
+            case 8 -> ConversorDeMonedas.conversion("COP", "USD", monto);
+            case 9 -> ConversorDeMonedas.conversion("USD", "BOB", monto);
+            case 10-> ConversorDeMonedas.conversion("BOB", "USD", monto);
         }
     }
 
     private static void mostrarMenu() {
         String menu = """
                 \n**********************************************************************
-                \nBIENVENIDO/A AL CONVERSOR DE MONEDAS
+                \nBIENVENIDO AL CONVERSOR DE MONEDAS
                 Elige la opción de la divisa que deseas convertir:
                 
                 1) Dólar (USD) => Peso argentino (ARS)
@@ -68,7 +76,11 @@ public class PrincipalMenu {
                 4) Real brasileño (BRL) => Dólar (USD)
                 5) Dólar (USD) => Peso chileno (CLP)
                 6) Peso chileno (CLP) => Dólar (USD)
-                7) Salir
+                7) Dólar (USD) => Peso colombiano (COP)
+                8) Peso colombiano (COP) => Dólar (USD)
+                9) Dólar (USD) => Peso boliviano (BOB)
+                10) Peso boliviano (BOB) => Dólar (USD)
+                11) Salir
                 """;
         System.out.println(menu);
     }
